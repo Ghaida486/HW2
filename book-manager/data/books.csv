@@ -1,6 +1,10 @@
 title,author,genre,status,rating,link,year
-Piranesi,Susanna Clarke,Fantasy,want-to-read,1,https://openlibrary.org/search?q=Piranesi,2020
 A Wizard of Earthsea,Ursula K. Le Guin,Fantasy,want-to-read,5,https://openlibrary.org/search?q=A+Wizard+of+Earthsea,1968
-And Then There Were None,Agatha Christie,Mystery,want-to-read,5,https://openlibrary.org/search?q=And+Then+There+Were+None,1939
+And Then There Were None,Agatha Christie,Mystery,finished,5,https://openlibrary.org/search?q=And+Then+There+Were+None,1939
 The Hound of the Baskervilles,Arthur Conan Doyle,Mystery,want-to-read,4,https://openlibrary.org/search?q=The+Hound+of+the+Baskervilles,1902
 Pride and Prejudice,Jane Austen,Fiction,want-to-read,2,https://openlibrary.org/search?q=Pride+and+Prejudice,1813
+The Left Hand of Darkness,Ursula K. Le Guin,Science Fiction,finished,0,https://openlibrary.org/search?q=The+Left+Hand+of+Darkness,1969
+The Murder of Roger Ackroyd,Agatha Christie,Mystery,want-to-read,0,https://openlibrary.org/search?q=The+Murder+of+Roger+Ackroyd,1926
+Jane Eyre,Charlotte Bronte,Fiction,reading,0,Unknown,Unknown
+Piranesi,Susanna Clarke,Fantasy,want-to-read,0,https://openlibrary.org/search?q=Piranesi,2020
+The Moonstone,Wilkie Collins,Mystery,want-to-read,0,https://openlibrary.org/search?q=The+Moonstone,1868

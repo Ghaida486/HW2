@@ -27,11 +27,18 @@ index=${choice%%.*}
 row=$(printf '%s\n' "$rows" | sed -n "${index}p")
 IFS=$'\t' read -r title author genre status rating link year <<< "$row"
 printf '\n%s\nBy %s\nGenre: %s | Year: %s\nStatus: %s | Rating: %s/5 (0 = unrated)\nLink: %s\n\n' "$title" "$author" "$genre" "$year" "$status" "$rating" "$link"
-action=$(gum choose 'Change status' 'Rate book' 'Back') || exit 0
+action=$(gum choose 'Change status' 'Rate book' 'Delete book' 'Back') || exit 0
 case "$action" in
   'Change status')
     value=$(gum choose want-to-read owned reading finished) || exit 0
     bash "$MANAGE" update "$title" "$author" status "$value"; echo 'Status updated.' ;;
+  'Delete book')
+    if gum confirm --default=false "Delete $title by $author from your library?"; then
+      bash "$MANAGE" delete "$title" "$author"
+      printf 'Deleted from your library: %s\n' "$title"
+    else
+      echo 'Deletion cancelled. Book kept.'
+    fi ;;
   'Rate book')
     value=$(gum choose --header '0 = unrated; 5 = loved it' 0 1 2 3 4 5) || exit 0
     bash "$MANAGE" update "$title" "$author" rating "$value"; echo 'Rating updated.' ;;

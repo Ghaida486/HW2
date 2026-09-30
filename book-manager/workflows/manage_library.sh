@@ -5,7 +5,7 @@ ROOT=$(cd "$(dirname "$0")/.." && pwd)
 DB="$ROOT/data/book_database.sh"
 command=${1:-}; shift || true
 case "$command" in
-  list|update|exists) bash "$DB" "$command" "$@" ;;
+  list|update|exists|delete) bash "$DB" "$command" "$@" ;;
   search) bash "$ROOT/books/search_books.sh" "$@" ;;
   add)
     [[ $# -ge 3 ]] || { echo 'Usage: manage_library.sh add TITLE AUTHOR STATUS [GENRE]' >&2; exit 1; }
@@ -16,5 +16,5 @@ case "$command" in
     [[ -n "$author" ]] || { echo 'Please supply an author for a book outside the catalog.' >&2; exit 1; }
     bash "$DB" add "$title" "$author" "$genre" "$status" 0 "$link" "$year"
     ;;
-  *) echo 'Usage: manage_library.sh list|search|add|update|exists ...' >&2; exit 1 ;;
+  *) echo 'Usage: manage_library.sh list|search|add|update|exists|delete ...' >&2; exit 1 ;;
 esac

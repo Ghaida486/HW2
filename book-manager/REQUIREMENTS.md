@@ -18,23 +18,23 @@ of a grade; the instructor evaluates your explanation and demo as well as the co
 | History strategy | Uses saved authors and genres; excludes low-rated examples | History and rating tests |
 | Interest strategy | Matches chosen comma-separated genres | Exact-genre matching test |
 | Discovery strategy | Excludes genres already in library/interests | Discovery test and Surprise Me |
-| Refinement through stdin/stdout | Deduplicates, excludes saved books, ranks, caps at five, reserves discovery slot | Duplicate, exclusion, limit, empty-result tests |
+| Refinement through stdin/stdout | Deduplicates, excludes saved books, ranks, caps at five, reserves interest and discovery slots | Duplicate, exclusion, limit, empty-result tests |
 | Single library data boundary | Only application component `data/book_database.sh` accesses `books.csv` | Source inspection; workflows go through its commands |
 | Persistent storage | CSV with atomic replacement and validation | Persistence, punctuation, invalid-input tests |
 | Primarily Bash | 13 Bash scripts, with embedded Python only for robust CSV handling | Required file structure present |
 | Personalization | Fiction/mystery/fantasy interests, purple menu, ratings, discovery slot, Surprise Me | Preferences visible in app |
 | README | Root README includes launch steps, architecture, personalization | Written |
-| Personal GitHub repository | Local project is inside existing `Ghaida486/HW2` clone | Remote checked; not yet pushed |
+| Personal GitHub repository | Local project is inside existing `Ghaida486/HW2` clone | Initial code push verified; later revisions need another push |
 | Narrated demo | `DEMO_GUIDE.md` provides a short recording outline | **Your recording and real video link are still required** |
 | Explain each file and a workflow | `WALKTHROUGH.md` covers responsibilities, inputs/outputs, syntax and data flow | **Read and practice explaining it yourself** |
 | Submit GitHub URL to class sheet | `SUBMISSION.md` gives exact existing-repo steps | **Not submitted** |
 
 ## Test result
 
-All 16 automated tests passed in the installed Desktop project. Manual terminal
+All 21 automated tests passed again on September 29, 2026 in the installed Desktop project. Manual terminal
 checks also passed for launching, adding an enriched book, browsing details,
 rating, parallel recommendations, saving a recommendation, returning to the menu,
-and quitting. Tests used temporary libraries; your actual library remains empty.
+and quitting. Tests used temporary libraries; the current library contains seven saved books and the selected interest is Mystery. Earlier demo instructions referring to Piranesi were stale; DEMO_GUIDE.md now uses A Wizard of Earthsea.
 
 ## Deliberate limits
 
@@ -42,3 +42,22 @@ Metadata and suggestions come from a small bundled catalog. These are rule-based
 recommendation components; the app does not claim to call live AI or a live book
 service. The assignment permits, but does not require, Codex inside the app. It is
 a single-user application, not a database designed for concurrent app instances.
+
+## September 29, 2026 audit against ps02.pdf
+
+The code satisfies the inspected implementation requirements: all prescribed files/layers, a small entry point, Gum menus, library operations, metadata enrichment, three distinct background recommendation programs, PID capture and wait, live progress on stderr, a meaningful combination/refinement pipe, and exclusive CSV access through the database component. All 21 integration tests passed, including syntax, persistence, metadata, status/rating updates, search by argument/stdin, strategy behavior, refinement, progress, and failure handling. The real Gum menu, library selection, and book details were also exercised. The recommendation workflow returned five results with running/done progress.
+
+The PDF allows Codex but does not require live AI or an external metadata API. The offline catalog is therefore not a missing requirement. The Python CSV helper is limited to the data layer; the app is primarily small Bash programs.
+
+Remaining deliverables:
+
+- Record the user's short narrated terminal demo of two or three operations and add an accessible video/link to the root README. The PDF gives no exact minute limit.
+- Commit and push the current local changes. Git reports modified code/data/documentation. A read-only remote check failed with SSH `Permission denied (publickey)`, so current GitHub contents were not verified.
+- Confirm the repository URL is entered under Assignment No 2 in the class sheet. The sheet was not inspected or changed in this review.
+- Practice explaining each file and one full workflow. A written walkthrough exists, but understanding requires the user's rehearsal.
+
+The old walkthrough and README contain historical sample-data descriptions; the current seven-book library is authoritative. The updated recording guide matches the present library without modifying it.
+
+## Final packaging update
+
+The completed recording is now included as `HW2_DEMO.mov` and linked from both READMEs. The current library contains nine saved books and the selected interests are Fantasy and Fiction. Earlier counts and recording prerequisites above describe previous review snapshots. The recording duration is 5 minutes 15 seconds. Audio-track presence was verified, but narration quality was not assessed. GitHub upload and the class-sheet entry require separate confirmation.

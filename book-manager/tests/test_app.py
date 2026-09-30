@@ -24,6 +24,39 @@ class BookManagerTests(unittest.TestCase):
         return p
     def add(self, title='The Hobbit', author='J. R. R. Tolkien', status='reading'):
         return self.run_script(MANAGE, 'add', title, author, status)
+    def test_delete_exact_book_and_preserve_others(self):
+        self.add('A "Curious", Book', 'Writer One')
+        self.add('A "Curious", Book', 'Writer Two')
+        self.run_script(MANAGE,'delete',' a "curious", book ','WRITER ONE')
+        rows=self.run_script(DB,'list').stdout.splitlines()
+        self.assertEqual(len(rows),1)
+        self.assertIn('Writer Two',rows[0])
+        self.run_script(MANAGE,'delete','A "Curious", Book','Writer Two')
+        self.assertEqual(self.run_script(DB,'list').stdout,'')
+
+    def test_delete_missing_book_does_not_change_data(self):
+        self.add()
+        before=Path(self.env['BOOK_DB']).read_bytes()
+        self.assertNotEqual(self.run_script(MANAGE,'delete','Missing','Author',ok=False).returncode,0)
+        self.assertEqual(Path(self.env['BOOK_DB']).read_bytes(),before)
+
+    def test_delete_ui_confirmation(self):
+        self.add()
+        fake=Path(self.tmp.name)/'bin'
+        fake.mkdir()
+        gum=fake/'gum'
+        gum.write_text("#!/bin/bash\ncase \"$1\" in\nchoose) if [[ $# -eq 5 ]]; then echo 'Delete book'; else head -n 1; fi ;;\nconfirm) exit \"${CONFIRM_EXIT:-1}\" ;;\nesac\n".replace('\"','"'))
+        gum.chmod(0o755)
+        self.env['PATH']=str(fake)+os.pathsep+self.env['PATH']
+        before=Path(self.env['BOOK_DB']).read_bytes()
+        p=self.run_script('ui/library_screen.sh','browse')
+        self.assertIn('Deletion cancelled',p.stdout)
+        self.assertEqual(Path(self.env['BOOK_DB']).read_bytes(),before)
+        self.env['CONFIRM_EXIT']='0'
+        p=self.run_script('ui/library_screen.sh','browse')
+        self.assertIn('Deleted from your library',p.stdout)
+        self.assertEqual(self.run_script(DB,'list').stdout,'')
+
     def test_empty_library(self):
         self.assertEqual(self.run_script(DB, 'list').stdout, '')
     def test_catalog_enrichment_and_persistence(self):
@@ -90,6 +123,22 @@ class BookManagerTests(unittest.TestCase):
         for strategy in ['history','interests','discovery']:
             self.assertIn(strategy+': running',p.stderr)
             self.assertIn(strategy+': done',p.stderr)
+    def test_selected_interest_survives_stronger_history(self):
+        self.add()
+        p=self.run_script('workflows/get_recommendations.sh','Memoir')
+        rows=[r.split('\t') for r in p.stdout.splitlines()]
+        self.assertEqual(len(rows),5)
+        self.assertEqual(rows[0][2],'Memoir')
+        self.assertTrue(any('Explore a new genre:' in r[5] for r in rows))
+        self.assertEqual(len({(r[0],r[1]) for r in rows}),5)
+
+    def test_interest_duplicate_keeps_strongest_record(self):
+        candidates='A\tAuthor\tMemoir\t2000\tlink\tShared author with your library\t5\n'
+        candidates+='A\tAuthor\tMemoir\t2000\tlink\tMatches your interests: Memoir\t3\n'
+        result=self.run_script('recommendations/refine_recommendations.sh',text=candidates).stdout.splitlines()
+        self.assertEqual(len(result),1)
+        self.assertTrue(result[0].endswith('\t5'))
+
     def test_discovery_mode(self):
         p=self.run_script('workflows/get_recommendations.sh','Fiction, Mystery, Fantasy','discovery')
         self.assertTrue(p.stdout.strip())

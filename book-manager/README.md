@@ -1,114 +1,47 @@
 # Between the Pages
 
-A small terminal book manager personalized for **fiction, mystery, and fantasy**.
-Add and search books, track reading status and ratings, and discover your next read.
+Save books, search your library, update reading status and ratings, and get personalized suggestions in Terminal.
 
 ## Run
 
-Requires Bash, Python 3, and [Gum](https://github.com/charmbracelet/gum).
-On a Mac with Homebrew, install missing dependencies with `brew install gum python`.
-Bash is included with macOS. No API key, AI subscription, or internet connection is
-required to run the app. The optional book-information links open external pages.
-
-Open this project folder in VS Code, choose **Terminal → New Terminal**, then run:
+In this folder, run:
 
 ```bash
 bash app.sh
 ```
 
-Use arrow keys and Enter in menus. For **Edit Interests**, Space selects genres and
-Enter saves. Escape cancels a selection. Ratings run from 1 to 5; 0 means unrated.
-The four statuses are `want-to-read`, `owned`, `reading`, and `finished`.
-
-Try adding **The Hobbit** (leave the author blank to use the catalog), browse your
-library, then request recommendations. The library starts empty: no books are
-claimed as your reading history. If a title is outside the catalog, supply its
-author and genre. Unknown publication years and links remain `Unknown`.
+Requires Bash, Gum, and Python 3. On a Mac with Homebrew, use `brew install gum python` for missing tools. Use arrow keys and Enter in menus; press X to select genres in **Edit Interests**. After an operation, press Enter to return to the menu.
 
 ## Architecture
 
-`app.sh` starts the Gum UI in `ui/`. Screens call `workflows/`, which coordinate
-book components, recommendation components, and the data layer. Only
-`data/book_database.sh` reads or writes `data/books.csv`. It uses a short embedded
-Python helper for CSV parsing, so commas and quotes in titles are handled
-correctly; the application is otherwise composed of small Bash programs. The
-recommendation workflow starts three background processes with `&`, records their
-PIDs with `$!`, monitors progress, and synchronizes with `wait`. It combines their
-TSV results and uses `|` to feed the refinement component. Progress goes to stderr;
-book records go to stdout so they can be piped without mixing in status messages.
+The app follows `UI → Workflows → Book/Recommendation Components → Data Layer → Storage`. `app.sh` checks dependencies and opens a Gum menu; screens collect user choices and display results, while workflows coordinate the work. Book components search the library and enrich known titles from a bundled catalog. Three independent Bash recommendation programs examine saved authors/genres, selected interests, and unfamiliar genres. The recommendation workflow starts them with `&`, records their process IDs with `$!`, waits for completion with `wait`, and pipes their combined output through refinement to remove duplicates and saved books and produce a ranked shortlist. Progress messages go to stderr so stdout remains usable as data. Only `data/book_database.sh` accesses `books.csv`; an embedded Python CSV helper handles quoted commas reliably. This separation keeps each component focused and allows it to be tested independently.
 
 ## Personalization
 
-The default interests are fiction, mystery, and fantasy, with a purple menu and
-the name **Between the Pages**. Interests can be changed from the menu. History
-recommendations favor authors and genres from saved books, ignoring ratings below
-3 except 0 (unrated). Interest recommendations match chosen genres. Discovery
-recommendations explore genres outside both the library and chosen interests.
-The five-book shortlist reserves one discovery slot when available. **Surprise Me**
-is an extra feature that shows only discovery suggestions, with an option to save
-one to the want-to-read list.
+Between the Pages reflects my interest in fiction, mystery, and fantasy through its default genres, curated catalog, and purple terminal interface. I can edit my interests and track each book as owned, want-to-read, reading, or finished. History recommendations use authors and genres from books rated 3–5 or left unrated; the final shortlist puts an available interest match first and reserves a discovery slot, and **Surprise Me** shows only unfamiliar-genre suggestions. The repository includes example library books with sample ratings to demonstrate the features; these are demonstration data, not claims about books I have read or my actual reviews.
 
-## Recommendation limits
+## Your library versus the catalog
 
-This is a transparent, rule-based recommendation system, not a live AI service.
-It uses the small, bundled `books/catalog.tsv` and does not query a book API.
-Metadata lookup requires an exact title and, when supplied, exact author, ignoring
-case. Recommendations are deterministic, not random; expand the catalog for more
-variety. A title/author pair identifies a book. The app assumes one person runs
-one copy at a time; simultaneous writes from several app instances are unsupported.
-Tabs, newlines, and control characters are rejected in book fields because the
-components exchange one tab-separated record per line.
+- `data/books.csv` holds the books you have saved, their reading status, and their rating. This copy includes nine saved books; new books are added through the app.
+- `books/catalog.tsv` holds 23 reference books with title, author, genre, publication year, and an information link. It supplies metadata and recommendation candidates.
+- `data/interests.txt` stores your selected genres. The library and catalog are separate: saving a recommendation adds it to the library, and future suggestions exclude it.
 
-## Tests
+A book outside the catalog can still be saved with a supplied author and genre; its unknown year and link remain `Unknown`. Known-title matching is exact apart from case. New books start at rating 0 (unrated); ratings 1–5 and reading status are separate fields.
+
+## Check and learn
 
 ```bash
 python3 tests/test_app.py
 ```
 
-Tests use a temporary database and never modify your library. They check persistence,
-CSV punctuation, duplicate prevention, updates, invalid inputs, search through a
-pipe, each strategy, refinement, failure handling, and the complete workflow.
+The 21 integration tests use temporary data. See [WALKTHROUGH.md](WALKTHROUGH.md) for input/output traces and recommendation rules, and [REQUIREMENTS.md](REQUIREMENTS.md) for assignment coverage. The app is primarily Bash, with Python used inside the database component for reliable CSV handling. It assumes a single app instance and does not call live AI or external metadata services.
 
-## Useful terminal examples
+## Demo and submission
 
-```bash
-bash workflows/manage_library.sh add "The Hobbit" "J. R. R. Tolkien" reading
-bash books/search_books.sh fantasy
-echo mystery | bash books/search_books.sh
-bash workflows/manage_library.sh update "The Hobbit" "J. R. R. Tolkien" rating 5
-bash workflows/get_recommendations.sh "Fiction, Mystery, Fantasy"
-```
+[**Watch the demo video**](../HW2_DEMO.mov). The recording is included in the repository and linked from the main README. See [SUBMISSION.md](SUBMISSION.md) for the final class-sheet submission step.
 
-These commands modify or inspect your real library. For experiments, set
-`BOOK_DB` to a different CSV path. Run the menu from any directory by passing the
-full path to `app.sh`; scripts locate their sibling files themselves.
+Based on the [course starter](https://github.com/onexi/ps02), with its LICENSE retained. Developed with Codex assistance.
 
-## Data formats
+## Delete a saved book
 
-Storage CSV: `title,author,genre,status,rating,link,year`.
-Database output uses the same field order, separated by tabs and without a header.
-Catalog: `title,author,genre,year,link`, separated by tabs with a header.
-Recommendation output: `title,author,genre,year,link,reason,score`, separated by tabs.
-Scores: shared author 5, shared genre 4, interest 3, discovery 2.
-`book_database.sh add` accepts seven arguments in storage field order;
-`update` accepts title, author, field (`status` or `rating`), and new value.
-
-## Demo video — still to record
-
-**The required narrated demo has not been recorded yet.** Use
-[DEMO_GUIDE.md](DEMO_GUIDE.md) to record your own short walkthrough. Add a visible
-link to your actual video here before submitting. This guide is not a replacement
-for the video.
-
-## Submission — still to complete
-
-Read [WALKTHROUGH.md](WALKTHROUGH.md) until you can explain each file, then follow
-[SUBMISSION.md](SUBMISSION.md) to publish to your existing HW2 GitHub repository, attach the
-narrated video, and submit your repository URL. This project has not been uploaded
-or submitted on your behalf.
-
-## Starter attribution
-
-Based on the [course starter](https://github.com/onexi/ps02), with its LICENSE retained.
-Implementation developed with Codex assistance. See [REQUIREMENTS.md](REQUIREMENTS.md)
-for the assignment mapping and the remaining video/submission tasks.
+Choose **Browse Library** or **Search Library**, select a book, then choose **Delete book**. Confirm Yes to remove it, or No to keep it. Deletion removes the saved record (including its status and rating), not the catalog entry. A deleted catalog book can appear in future recommendations again. The UI asks for confirmation, the workflow routes the request, and the database component performs the deletion.

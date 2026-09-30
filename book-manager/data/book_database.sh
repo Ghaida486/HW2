@@ -27,7 +27,7 @@ def save(rows):
         os.replace(tmp, path)
     finally:
         if os.path.exists(tmp): os.unlink(tmp)
-if not args: fail('Usage: book_database.sh list|add|search|exists|update ...')
+if not args: fail('Usage: book_database.sh list|add|search|exists|update|delete ...')
 if any(any(ord(c) < 32 or ord(c) == 127 for c in a) for a in args):
     fail('Fields cannot contain tabs, newlines, or control characters.')
 args = [a.strip() for a in args]
@@ -53,6 +53,10 @@ elif command == 'add' and len(values) == 7:
     if any(key(r['title'],r['author']) == key(row['title'],row['author']) for r in rows):
         fail('That title and author are already in your library.')
     rows.append(row); save(rows)
+elif command == 'delete' and len(values) == 2:
+    remaining = [r for r in rows if key(r['title'],r['author']) != key(*values)]
+    if len(remaining) == len(rows): fail('Book not found.')
+    save(remaining)
 elif command == 'update' and len(values) == 4:
     title, author, field, value = values
     if field not in ['status','rating']: fail('Only status and rating can be updated.')
