@@ -66,13 +66,29 @@ flowchart LR
     class U green;
 ```
 
-| Strategy | What it uses | How it selects candidates |
-|---|---|---|
-| **History** | Saved books rated 3–5 or left unrated | Matches an author (score 5), otherwise a genre (score 4). |
-| **Interests** | Genres chosen in Edit Interests | Matches selected genres (score 3). |
-| **Discovery** | Saved genres and selected interests | Chooses genres outside both groups (score 2). |
+### Recommendation logic
 
-Refinement removes saved books and duplicate title–author pairs, keeps the strongest duplicate, and returns at most five suggestions. It puts an available interest match first and reserves a discovery slot when available. **Surprise Me** runs the same workflow but sends only discovery candidates into refinement.
+**Get Recommendations asks: which books in the bundled catalog might I want to read next?** Three independent scripts examine the same 23-book catalog from different perspectives. They use explicit matching rules, rather than a live AI model or an online search. Library information comes through `data/book_database.sh`; selected genres come from **Edit Interests** and are saved in `data/interests.txt`.
+
+| Strategy and script | Information it considers | Selection rule and displayed reason |
+|---|---|---|
+| **History** — `recommend_from_history.sh` | Authors and genres from saved books rated **3–5**, plus books left **unrated (0)**. Reading status does not affect this rule. | A matching author receives **5 points** and “Shared author with your library.” Otherwise, a matching genre receives **4 points** and “Matches a genre in your library.” Books rated 1–2 do not contribute authors or genres to this strategy. |
+| **Interests** — `recommend_from_interests.sh` | Genres explicitly selected in **Edit Interests**. It does not use reading status or ratings. | An exact genre match, ignoring letter case, receives **3 points** and “Matches your interests.” For example, choosing Fantasy makes fantasy titles eligible. |
+| **Discovery** — `recommend_for_discovery.sh` | Genres of **all saved books**, regardless of status or rating, together with selected interests. | A genre absent from both groups receives **2 points** and “Explore a new genre.” For example, Science is eligible if it is neither saved in the library nor selected as an interest. |
+
+These scores are fixed priorities used by the program, not predictions of how much I will enjoy a book. An unrated saved book is treated as a possible interest signal; the app does not assume that I have finished or enjoyed it.
+
+**How the final shortlist is selected:**
+
+1. Combine the three scripts' results and sort candidates by score, highest first.
+2. Remove books already saved in the library. Identify books by their title–author pair, ignoring letter case.
+3. Merge duplicate suggestions, keeping the highest-scoring record and its explanation. Remember whether any copy also matched my selected interests.
+4. Put the highest-ranked available interest match first. Fill the remaining places in score order while reserving one place for a discovery candidate when available, then fill any spare places from the remaining candidates.
+5. Display **up to five books**. Selecting a recommendation lets me continue to the save action; generating the list alone does not save anything.
+
+**Why can an interest match display a History explanation?** Suppose Fantasy is selected and an eligible saved book is also Fantasy. A new fantasy title can be suggested by both History (4 points) and Interests (3 points). Refinement keeps the History explanation because it has the higher score, but remembers the interest match and can place that book first. A shared-author match would receive 5 points instead; the scores are not added together.
+
+**Surprise Me** launches the same three scripts but passes only Discovery's results to refinement, so its shortlist contains unfamiliar genres. With an empty library, History produces no candidates; Interests and Discovery can still contribute. Because suggestions come from a fixed catalog, fewer than five books—or none—may remain after filtering. Repeating the request with unchanged library data and interests gives the same results.
 
 ## Personalization
 
