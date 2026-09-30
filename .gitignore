@@ -1,3 +1,7 @@
 .DS_Store
 __pycache__/
 *.pyc
+
+# Keep original demo recordings locally, outside version control.
+/HW2_DEMO.mov
+/HW2_DEMO_tiny.mp4

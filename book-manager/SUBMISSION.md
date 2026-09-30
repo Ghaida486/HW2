@@ -2,7 +2,7 @@
 
 Repository: https://github.com/Ghaida486/HW2
 
-The demo recording is included as `HW2_DEMO_tiny.mp4` at the repository root and linked prominently from the root README. Download the MP4 if GitHub does not play it inline.
+The previous demo videos have been removed from the repository. A demo video or visible README link still needs to be added to meet the submission requirements.
 
 ## Verify after pushing
 
