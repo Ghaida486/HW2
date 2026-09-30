@@ -26,9 +26,9 @@ Between the Pages reflects my interest in fiction, mystery, and fantasy through 
 
 ## Demo video
 
-[**Watch the demo video**](HW2_DEMO.mov) · [Download the MOV recording](https://github.com/Ghaida486/HW2/raw/refs/heads/main/HW2_DEMO.mov)
+[**Watch the demo video**](HW2_DEMO_tiny.mp4) · [Download the MP4 recording](https://github.com/Ghaida486/HW2/raw/refs/heads/main/HW2_DEMO_tiny.mp4)
 
-The recording shows the application running in Terminal, including library management, recommendations, discovery, and editing interests. Duration: approximately 5 minutes 15 seconds. If GitHub does not play the MOV inline, download it to watch.
+The recording shows the application running in Terminal, including library management, recommendations, discovery, and editing interests. Duration: approximately 5 minutes 15 seconds. If GitHub does not play the MP4 inline, download it to watch.
 
 ## Verify and understand
 

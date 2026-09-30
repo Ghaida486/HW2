@@ -38,7 +38,7 @@ The 21 integration tests use temporary data. See [WALKTHROUGH.md](WALKTHROUGH.md
 
 ## Demo and submission
 
-[**Watch the demo video**](../HW2_DEMO.mov). The recording is included in the repository and linked from the main README. See [SUBMISSION.md](SUBMISSION.md) for the final class-sheet submission step.
+[**Watch the demo video**](../HW2_DEMO_tiny.mp4). The recording is included in the repository and linked from the main README. See [SUBMISSION.md](SUBMISSION.md) for the final class-sheet submission step.
 
 Based on the [course starter](https://github.com/onexi/ps02), with its LICENSE retained. Developed with Codex assistance.
 

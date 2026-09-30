@@ -2,7 +2,7 @@
 
 Repository: https://github.com/Ghaida486/HW2
 
-The demo recording is included as `HW2_DEMO.mov` at the repository root and linked prominently from the root README. Download the MOV if GitHub does not play it inline.
+The demo recording is included as `HW2_DEMO_tiny.mp4` at the repository root and linked prominently from the root README. Download the MP4 if GitHub does not play it inline.
 
 ## Verify after pushing
 

@@ -60,4 +60,4 @@ The old walkthrough and README contain historical sample-data descriptions; the 
 
 ## Final packaging update
 
-The completed recording is now included as `HW2_DEMO.mov` and linked from both READMEs. The current library contains nine saved books and the selected interests are Fantasy and Fiction. Earlier counts and recording prerequisites above describe previous review snapshots. The recording duration is 5 minutes 15 seconds. Audio-track presence was verified, but narration quality was not assessed. GitHub upload and the class-sheet entry require separate confirmation.
+The completed recording is now included as `HW2_DEMO_tiny.mp4` and linked from both READMEs. The current library contains nine saved books and the selected interests are Fantasy and Fiction. Earlier counts and recording prerequisites above describe previous review snapshots. The recording duration is 5 minutes 15 seconds. Audio-track presence was verified, but narration quality was not assessed. GitHub upload and the class-sheet entry require separate confirmation.
