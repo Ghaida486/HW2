@@ -92,7 +92,7 @@ These scores are fixed priorities used by the program, not predictions of how mu
 
 ## Personalization
 
-I built Between the Pages around my interest in fiction, mystery, and fantasy, with a purple terminal interface and a curated book catalog. I can change my selected genres, track books as owned, want-to-read, reading, or finished, and record ratings. Recommendations balance familiar authors and genres with an unfamiliar choice, while **Surprise Me** helps me explore beyond my usual selections. Included books and ratings are demonstration data, not claims about my reading history or personal reviews.
+I built Between the Pages around my interest in fiction, mystery, and fantasy, with a purple terminal interface and a curated book catalog. Through **Edit Interests**, I can change my selected genres as my reading preferences evolve. I can track books as owned, want-to-read, reading, or finished, and record ratings. I can also select a saved book from **Browse Library** or **Search Library** and choose **Delete book** to remove it from my library after confirmation. Recommendations balance familiar authors and genres with an unfamiliar choice, while **Surprise Me** helps me explore beyond my usual selections. Included books and ratings are demonstration data, not claims about my reading history or personal reviews.
 
 ## Scope and verification
 
