@@ -2,7 +2,9 @@
 
 Repository: https://github.com/Ghaida486/HW2
 
-The updated narrated demo is included as `HW2_DEMO_final_tiny.mp4` at the repository root and linked from both READMEs. It contains the architecture introduction followed by the updated app demonstration (6 minutes 35 seconds, 480p, approximately 4.1 MB). Download the MP4 if inline playback is unavailable.
+The updated narrated demo is embedded in both READMEs using a GitHub video attachment: https://github.com/user-attachments/assets/e2c3f0f3-c068-4d86-bf62-5f7e04bfcfce
+
+The H.264 MP4 contains the architecture introduction followed by the app demonstration (6 minutes 35 seconds, 480p).
 
 ## Verify after pushing
 
