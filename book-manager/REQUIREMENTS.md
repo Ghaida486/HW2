@@ -60,4 +60,4 @@ The old walkthrough and README contain historical sample-data descriptions; the 
 
 ## Final packaging update
 
-The previous demo recordings have been removed from the repository; a replacement recording or link is pending. The current library contains nine saved books and the selected interests are Fantasy and Fiction. Earlier counts and recording prerequisites above describe previous review snapshots. The recording duration is 5 minutes 15 seconds. Audio-track presence was verified, but narration quality was not assessed. GitHub upload and the class-sheet entry require separate confirmation.
+The updated demo is included as `HW2_DEMO_final_tiny.mp4` and linked from both READMEs. It combines the architecture introduction with the updated app demonstration. Duration: 6 minutes 35 seconds; 480p AV1 video with AAC narration; approximately 4.1 MB. The file was checked for decoding errors. Earlier recording durations and sample-library counts above describe previous snapshots. The class-sheet entry must be confirmed separately.

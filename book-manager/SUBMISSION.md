@@ -2,7 +2,7 @@
 
 Repository: https://github.com/Ghaida486/HW2
 
-The previous demo videos have been removed from the repository. A demo video or visible README link still needs to be added to meet the submission requirements.
+The updated narrated demo is included as `HW2_DEMO_final_tiny.mp4` at the repository root and linked from both READMEs. It contains the architecture introduction followed by the updated app demonstration (6 minutes 35 seconds, 480p, approximately 4.1 MB). Download the MP4 if inline playback is unavailable.
 
 ## Verify after pushing
 

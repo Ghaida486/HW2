@@ -2,6 +2,12 @@
 
 A personal terminal book manager for saving books, tracking reading status and ratings, and choosing what to read next. Built from small Bash programs for **MIT 1.125 · PS02**.
 
+## Demo video
+
+[**Watch the narrated demo**](../HW2_DEMO_final_tiny.mp4) · [Open or download the MP4](https://github.com/Ghaida486/HW2/raw/refs/heads/main/HW2_DEMO_final_tiny.mp4)
+
+The video begins with an introduction to the README and architecture, followed by the app demonstration. **6 minutes 35 seconds · 480p · approximately 4.1 MB.** Compressed using the professor's AV1 settings, with narration retained. If GitHub does not show a video player, use the download link and open the file locally.
+
 ## Setup and run
 
 Requires **Bash, Gum, and Python 3**. On macOS with Homebrew:
