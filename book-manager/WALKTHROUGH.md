@@ -158,7 +158,7 @@ The UI asks whether to save the selected book. If you choose Yes, it calls the s
 | `data/interests.txt` | Chosen genres | Persistent preference storage | Menu and recommendation workflow/strategies |
 | `tests/test_app.py` | Temporary fixtures | Checks the components and complete workflows; reports test results | Bash scripts; temporary test CSVs |
 
-Supporting documents: README explains setup/design; DEMO_GUIDE prepares the recording; REQUIREMENTS maps the rubric; SUBMISSION explains GitHub/class steps; ASSIGNMENT preserves the original instructions; LICENSE preserves licensing terms. `.gitignore` keeps Mac housekeeping and Python cache files out of Git.
+Supporting documents: README explains setup/design and includes the demo video; ASSIGNMENT preserves the original instructions; LICENSE preserves licensing terms. `.gitignore` keeps Mac housekeeping and Python cache files out of Git.
 
 ## 8. Why not write everything in one file?
 
