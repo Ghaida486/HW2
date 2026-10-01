@@ -6,8 +6,6 @@ A personal terminal book manager for saving books, tracking reading status and r
 
 https://github.com/user-attachments/assets/e2c3f0f3-c068-4d86-bf62-5f7e04bfcfce
 
-[Open the narrated demo](https://github.com/user-attachments/assets/e2c3f0f3-c068-4d86-bf62-5f7e04bfcfce)
-
 The video begins with an introduction to the README and architecture, followed by the app demonstration. **6 minutes 35 seconds · 480p · H.264 MP4**, with narration retained. Press play above to watch directly on GitHub.
 
 ## Setup and run
