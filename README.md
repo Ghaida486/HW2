@@ -14,8 +14,8 @@ Requires **Bash, Gum, and Python 3**. On macOS with Homebrew:
 
 ```bash
 brew install gum python
-git clone https://github.com/Ghaida486/HW2.git
-cd HW2/book-manager
+git clone https://github.com/Ghaida486/book-manager.git
+cd book-manager
 bash app.sh
 ```
 
